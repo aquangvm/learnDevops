@@ -1,0 +1,16 @@
+pwd  // vị trí hiện tại đang ở đâu
+whoami  // đang đăng nhập với user nào 
+cd /var.....    // di chuyển thư mục
+ls  // xe, danh sách thư mực, file
+mkdir  // tạo thư mục
+touch  // tạo file
+rm  // xóa file , 
+rm -r  // xóa thư mục
+cp data/  /tmp/  // coppy file
+mv /tmp/data  /var/www/  // di chuyển file, folder
+echo "hello world" > /tmp/data  // ghi đè nội dung vào file 
+echo "hello world" >> /tmp/data  // ghi thêm nội dung vào file 
+history // xem lại lịch sử các lệnh đã thực thi
+tail -n 10 title.txt // xem 10 dòng cuối của file 
+tail -f log.txt // xem trực tiếp dữ liệu thời gian thực 
+
