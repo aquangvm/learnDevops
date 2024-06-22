@@ -13,4 +13,17 @@ echo "hello world" >> /tmp/data  // ghi thêm nội dung vào file
 history // xem lại lịch sử các lệnh đã thực thi
 tail -n 10 title.txt // xem 10 dòng cuối của file 
 tail -f log.txt // xem trực tiếp dữ liệu thời gian thực 
+cat /etc/passwd  // xem file
 
+
+*************************************************************************************************
+free -m  // trạng thái sử dụng ram 
+df -h /  // trạng thái sử dụng ổ cứng
+top  // trạng thái sử dụng cpu
+ps -ef // trạng thái sử dụng process, tiến trình đang chạy trên hệ thống
+hostnamectl set-hostname lab-server  // đổi tên server  , đổi tên xong phải khởi động lại server , sủ dụng reboot 
+netstat -anp  // trạng thái sử dụng network    hoặc netstat -tlpun  ( -t hiển thị thông tin kết nối tcp, -l hiển thị các cổng đang mở và nắng nghe để chấp nhận kết nối và 
+-p hiển thị tiến trình và chương trình liên quan đến mỗi kết nối , -u hiển thị thông tin về kết nối udp ,   -n hiển thị địa chỉ ip và cổng trong dạng số thay vì tên miền )
+telnet 192.168.1.100 80 // check xem có thông kết nối đến server với cổng 80 hay không 
+traceroute -T -p 80 192.168.1.100 // -T TPC, -p port , xem các đường đi đến server đi qua các điểm nào có thông hay không 
+apt remove net-tools // xóa package , ngược lại với install 

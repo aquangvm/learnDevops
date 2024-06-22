@@ -1,0 +1,11 @@
+useradd  và adduser  // thêm user  thường sử dụng adduser  khác nhau useradd không tạo thêm các password cũng như các thông tin thêm
+/etc/passwd   // file xem thông tin user
+deluser [ten user]   // xóa user
+groupadd [gruoup name]  // thêm group
+delgroup   // xóa group
+usermod -aG groupname user // thêm user vào group  -a appen thêm vào , -G liệt kê danh sách các group của groupname, nếu k dùng -G thì hệ thống sẽ thêm user vào group nhưng sẽ xóa tất cả các group mà user có trước đó
+groups user  // xem thông tin group của user
+delusser user groupname // xóa user khỏi group
+chown user:groupname file  // đổi chủ sở hữu và nhóm hữu group của file
+chown -R user:groupname file // đổi cả các file con trong folder
+

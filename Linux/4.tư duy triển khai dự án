@@ -1,0 +1,10 @@
+Triển khai dự án cần công cụ tương ứng
+phiên bản công cụ phải lớn hơn hoặc bằng yêu cầu
+file trong dự án gồm : file chức năng, file cấu hình 
+Các bước triển khai : Build, run 
+
+
+* chú ý :
+mỗi dự án có thư mục làm việc riêng
+có user riêng cho dự án
+

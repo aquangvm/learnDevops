@@ -1,0 +1,11 @@
+vi /etc/passwd  // mở file
+i  // insert mode , thêm sửa xóa file
+phím esc  // thoát khỏi mode 
+rr  // xóa 1 dòng
+u  / back lại những gì đã đổi , như ctrl + z
+yy // coppy 1 dòng
+p // paste
+/  // search
+:q!  // thoát khỏi file không cần lưu 
+:x  // lưu file
+:wq // lưu file và thoát khỏi file
