@@ -1,0 +1,8 @@
+nhánh main chưa code môi trường người dùng
+nhánh develop chứa code môi trường phát triển
+nhánh feature được tạo từ nhánh develop chứa code các chức năng
+nhánh release chưa code môi trường thử nghiệm
+nhánh hotfix được tạo ra từ nhánh main
+
+![alt text](image.png)
+
