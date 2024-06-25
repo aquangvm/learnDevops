@@ -1,0 +1,78 @@
+## cai dat gitlab runner
+apt-get update
+curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | bash
+apt-get install gitlab-runner
+apt-cache madison gitlab-runner
+gitlab-runner -version
+usermod -aG docker gitlab-runner
+usermod -aG sudo gitlab-runner
+
+
+## ket noi runner vơi dự án
+Lên repo gitlab setting > CI/CD > Runners sẽ có các thông tin runner để điền thông tin khi tạo runner trên server
+gitlab-runner register
+Trường dầu tiên là url của gitlab
+Tiếp theo là token
+description for the runner : lab-server (tùy ý )
+tag for the runner : lab-server (tùy ý )
+executor : shell (tùy trường hợp để chạy script trên server hay dùng docker thì sẽ chọn docker)
+# có thể xem thêm thông tin runner trên server 
+vi /etc/gitlab-runner/config.toml
+để ý dòng đầu tiên là concurrent = 1 , có thể tùy chỉnh lên  ví dụ 4  nghĩa là con runner này sẽ chạy bao nhiêu dự án
+
+# khởi động
+nohup gitlab-runner run --working-directory /home/lab-runner/ --config /etc/gitlab-runner/config.toml --service gitlab-runner --user gitlab-runner 2>&1 &
+
+# quay lại kiểm tra trên gitlab xe đã active runner chưa.
+
+## viết kịch bản
+# cho phép user gitlab runner được sử dụng sudo
+visudo
+# sửa nội dung dưới dòng root  thêm nội dung như sau
+gitlab-runner ALL=(ALL) NOPASSWD: /bin/cp*     (ALL:ALL tương ứng với user và group để 1 cái thì là user thôi ) tuy nhiên chỉ được sử dụng ở 1 số lệnh như đã đề ra
+gitlab-runner ALL=(ALL) NOPASSWD: /bin/chown*   (ALL:ALL tương ứng với user và group để 1 cái thì là user thôi ) tuy nhiên chỉ được sử dụng ở 1 số lệnh như đã đề ra
+gitlab-runner ALL=(ALL) NOPASSWD: /bin/su shoeshop*   (ALL:ALL tương ứng với user và group để 1 cái thì là user thôi ) tuy nhiên chỉ được sử dụng ở 1 số lệnh như đã đề ra
+# tạo file  .gitlab-ci.yml
+# nội dung file
+stages:
+  - build
+  - deploy
+  - checklog
+
+build:
+  stage: build
+  variables:
+    GIT_STRATEGY: clone
+  script:
+    - nvm install -Dskiptests=true
+  tags:
+    - lab-server    # chọn runner nào để chạy
+  only:
+    - tags       # chỉ khi nào đánh tag mí chạy
+
+deploy:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - sudo cp target/shoe-ShopingCar-0.0.1-SNAPSHOT.jar /data/shoeshop
+    - sudo chown -R shoeshop. /data/shoeshop'
+    - sudo su shoeshop -c "kill -9 $(ps -ef | grep ShopingCar-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}')"
+    - sudo su shoehop -c "cd /data/shoeshop; nohup java -jar ShopingCar-0.0.1-SNAPSHOT.jar > nohup.out 2>&1 &"  
+
+  tags:
+    - lab-server    # chọn runner nào để chạy
+  only:
+    - tags       # chỉ khi nào đánh tag mí chạy
+
+checklog:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - sudo su shoeshop -c "cd /data/shoeshop; tail -n 10000 nohup.out"
+
+  tags:
+    - lab-server    # chọn runner nào để chạy
+  only:
+    - tags       # chỉ khi nào đánh tag mí chạy

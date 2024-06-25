@@ -1,0 +1,2 @@
+CI : Continuous Integration :  ( clone code build dự án, tích hợp test dự án)
+CD : Continuous Delivery : triển khai thủ công, cần bước xác nhận để triển khai hoặc Continuous deployment : triển khai tự động
