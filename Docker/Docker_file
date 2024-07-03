@@ -1,0 +1,19 @@
+# docker file để làm gì
+- đưa source code vào container 
+- cài đặt các công cụ dự án
+
+# docker file command
+from + tên docker image  ví dụ form node:20  (tương tự docker pull, kéo image về)
+workdir /app ( chỉ định thư mục làm việc như trong ví dụ là /app nếu chưa có sẽ tự động tạo)
+coppy . . (coppy source code vào container như trong ví dụ . thứ nhất là vị trí hiện tại của dockerfile . thứ 2 là vị trí hiện tại trong container khi chỉ định ở workdir)
+run (tương tự các câu lệnh chạy trong linux ví dụ run pwd)
+env (khai báo các biến)
+expose ( lệnh ứng dụng chạy ở port nào của container)
+cmd và entrypoint (đều là câu lệnh để chạy ứng dụng lên.  cmd thường được sử dụng để xác định lệnh và giá trị mặc định, entrypoint thường sử dụng khi muốn giữ nguyên 1 lệnh cố định và cho phép lệnh được chỉ định khi  container thêm vào cuối của nó)
+
+# tư duy viết dockerfile tối ưu
+- non root user ( chạy ứng dụng bằng user khác)
+- chọn base image phù hợp
+- sử dụng multipe stage (giúp giảm kích thước docker image cuối cùng khi build ra)
+
+#

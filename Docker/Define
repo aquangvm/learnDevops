@@ -1,0 +1,24 @@
+# Tại sao sử dụng docker
+- Đóng gói dự án để có thể triển khai trên các thiết bị khác 1 cách dễ dàng.
+
+# cài đặt
+script cài đặt installDocker.sh.  (note: cấp quyền thực thi cho file cài đặt)
+
+# sử dụng. 
+docker pull ubuntu:22.04  (kéo image về)
+
+docker run --name ubuntu -it ubuntu:22.04   (chạy container với name là ubuntu và image là ubuntu:22.04 vừa kéo về. -it là truy cập luôn vào image)
+
+docker ps (xem trạng thái của container đang chạy)
+
+docker exec -it ubuntu bash  (truy cập lại vào môi trường image. bash là câu lệnh để thực thi.)
+
+#vi dụ chạy 1 web server nginx
+docker run --nginx -dp 9999:80 nginx   (-d chạy dưới nền , -p port 9999:80 9999 là port muốn chạy ở bên ngoài server , 80 là port chạy ở trong container, nginx nếu k để version đằng sau mặc định sẽ lấy version mơi nhất)
+
+
+docker stop [name or id ] dừng container
+docker rm [name or id] xoá container khi đã dừng
+docker rm -f [name or id] buộc dừng container và xoá
+docker rm -f $(docker ps -a) xoá bỏ toàn bộ các container hiện có trên server
+docker rmi [nane:tag hoặc id] (xoá image)

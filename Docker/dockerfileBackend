@@ -1,0 +1,30 @@
+# note
+- chọn image đúng version dự án
+- chọn image từ các nguồn offical, verify , sponsored
+- chọn base image là alpine
+# viết dockerfile
+tạo file Dockerfile cấp cùng dự án
+
+
+## build stage ##
+FROM maven:3.5.3-jdk-8-alpine as build (chọn image)
+
+WORKDIR /app (chọn thư mục làm việc)
+COPY . . (coppy tất cả các file cùng cấp dockerfile vào thư mục làm việc của container /app)
+RUN nvm install -DskipTests=true (chạy lệnh build)
+
+## run stage ##
+FROM amazoncorretto:8u402-alpine-jre(image java của amazon, vì chạy dự án java chỉ cần cài java k cần maven nên k cần thiết container phải có maven, chỉ cần java là đủ)
+WORKDIR /run
+COPY --from=build /app/target/shoe-ShoppingCarrt=0.0.1-SNAPSHOT.jar /run/shoe-ShoppingCarrt=0.0.1-SNAPSHOT.jar
+
+EXPOSE 8080 ( dự án chạy ở port 8080 trong container )
+
+ENTRYPOINT java -jar /run/shoe-ShoppingCarrt=0.0.1-SNAPSHOT.
+
+
+
+
+# lưu lại file và build dự án
+docker build -t shoeshop:v1 . (dấu . laf sử dụng docker file ở thử mục hiện tại)
+
