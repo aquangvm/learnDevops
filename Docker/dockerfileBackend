@@ -28,3 +28,30 @@ ENTRYPOINT java -jar /run/shoe-ShoppingCarrt=0.0.1-SNAPSHOT.
 # lưu lại file và build dự án
 docker build -t shoeshop:v1 . (dấu . laf sử dụng docker file ở thử mục hiện tại)
 
+
+
+## docker file khi chạy với user riêng và không sử dụng container có sẵn
+
+## build stage ##
+FROM maven:3.5.3-jdk-8-alpine as build (chọn image)
+
+WORKDIR /app (chọn thư mục làm việc)
+COPY . . (coppy tất cả các file cùng cấp dockerfile vào thư mục làm việc của container /app)
+RUN nvm install -DskipTests=true (chạy lệnh build)
+
+## run stage ##
+FROM alpine:3.19
+RUN addusser -D shoeshop
+
+RUN apk add openjdk8
+WORKDIR /run
+COPY --from=build /app/target/shoe-ShoppingCarrt=0.0.1-SNAPSHOT.jar /run/shoe-ShoppingCarrt=0.0.1-SNAPSHOT.jar
+
+RUN chown -R shoeshop:shoeshop /run
+
+USER shoeshop
+
+EXPOSE 8080 ( dự án chạy ở port 8080 trong container )
+
+ENTRYPOINT java -jar /run/shoe-ShoppingCarrt=0.0.1-SNAPSHOT.
+
